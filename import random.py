@@ -1,42 +1,36 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+import random
 
-int main() {
-    int secretNumber, guess, attempts;
-    char choice;
+def number_guessing_game():
+    while True:
+        secret_number = random.randint(1, 100)
+        attempts = 0
 
-    srand(time(0)); // Seed the random number generator
+        print("\n🎯 Welcome to the Number Guessing Game!")
+        print("I'm thinking of a number between 1 and 100...")
 
-    do {
-        // Reset attempts for each new game
-        attempts = 0;
-        secretNumber = rand() % 100 + 1; // Random number between 1 and 100
+        # Game loop
+        while True:
+            try:
+                guess = int(input("Enter your guess: "))
+            except ValueError:
+                print("❌ Please enter a valid number!")
+                continue
 
-        printf("\n🎯 Welcome to the Number Guessing Game!\n");
-        printf("I'm thinking of a number between 1 and 100...\n");
+            attempts += 1
 
-        // Game loop
-        do {
-            printf("Enter your guess: ");
-            scanf("%d", &guess);
-            attempts++;
+            if guess < secret_number:
+                print("📉 Too Low! Try again.")
+            elif guess > secret_number:
+                print("📈 Too High! Try again.")
+            else:
+                print(f"✅ Congratulations! You guessed the number {secret_number} in {attempts} attempts 🎉")
+                break
 
-            if (guess < secretNumber) {
-                printf("Too Low! 📉 Try again.\n");
-            } else if (guess > secretNumber) {
-                printf("Too High! 📈 Try again.\n");
-            } else {
-                printf("✅ Congratulations! You guessed the number %d in %d attempts 🎉\n", secretNumber, attempts);
-            }
-        } while (guess != secretNumber);
+        # Ask if the player wants to play again
+        choice = input("\nDo you want to play again? (y/n): ").strip().lower()
+        if choice != 'y':
+            print("\n👋 Thanks for playing! Goodbye!")
+            break
 
-        // Ask if the user wants to play again
-        printf("\nDo you want to play again? (y/n): ");
-        scanf(" %c", &choice); // Notice the space before %c to ignore newline char
-
-    } while (choice == 'y' || choice == 'Y');
-
-    printf("\n👋 Thanks for playing! Goodbye!\n");
-    return 0;
-}
+# Run the game
+number_guessing_game()
